@@ -1,0 +1,26 @@
+    terminateonerror
+    -- ˜˜˜˜? com-˜˜˜˜ (com1) ˜˜ ?˜˜˜ 9600 ˜˜˜/˜
+    9600 openchannel //./com6
+
+
+: wait
+    
+    cr cr
+    ." ˜˜˜˜˜˜ ˜˜?˜˜ ˜ ˜˜˜˜˜˜ ˜˜˜˜˜˜ RESET ˜˜ ˜?˜˜ SDK." cr cr 
+    ." ˜˜˜˜˜˜˜˜ ˜˜?˜˜˜?... " 
+
+    begin rsio dup emit 109 == until
+
+    ." Ok" cr cr
+;
+
+    wait 
+
+    T_RAM
+
+    0x2100       write pulse_width_modulation.bin
+    0x2100       jmp
+
+    0 term
+
+bye
