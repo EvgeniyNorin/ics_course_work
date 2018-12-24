@@ -1,5 +1,4 @@
-#ifndef _STATE_H
-#define _STATE_H
+#pragma once
 
 typedef enum {
     INIT_STATE,
@@ -19,6 +18,6 @@ typedef enum {
     FALLBACK_TO_INIT_EVENT
 } event_e;
 
-state_e get_current_state(); 
+state_e get_current_state();
 
-#endif // _STATE_H
+state_e handle_event(event_e event);

@@ -37,16 +37,14 @@ clean:
 	rm -f $(NAME).hex
 	rm -f $(NAME).bin
 	rm -f $(NAME).map
-	rm $(NAME).mem
-	rm $(NAME).lnk
-	rm pm3p_*.txt
-	rm com?_log.txt
-	rm $(TARBALL).gz
-	rm $(SRC_DIR)\*.asm
-	rm $(SRC_DIR)\*.rel
-	rm $(SRC_DIR)\*.rst
-	rm $(SRC_DIR)\*.sym
-	rm $(SRC_DIR)\*.lst 
+	rm -f $(SRC_DIR)/*.asm
+	rm -f $(SRC_DIR)/*.rel
+	rm -f $(SRC_DIR)/*.rst
+	rm -f $(SRC_DIR)/*.sym
+	rm -f $(SRC_DIR)/*.lst 
+	rm -f $(NAME).mem
+	rm -f $(NAME).lnk
+	rm -f pm3p_*.txt
 
 load:
 	$(M3P) lfile load.m3p
@@ -63,8 +61,12 @@ term:
 
 LIST_SRC = \
 $(SRC_DIR)/main.c \
-${SRC_DIR}/state.c
-
+${SRC_DIR}/state.c \
+${SRC_DIR}/lcd.c \
+${SRC_DIR}/time.c \
+${SRC_DIR}/keyboard.c \
+${SRC_DIR}/timer.c \
+${SRC_DIR}/led.c
 
 LIST_OBJ = $(LIST_SRC:.c=.rel)
 
