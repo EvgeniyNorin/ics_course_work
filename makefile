@@ -66,7 +66,8 @@ ${SRC_DIR}/lcd.c \
 ${SRC_DIR}/time.c \
 ${SRC_DIR}/keyboard.c \
 ${SRC_DIR}/timer.c \
-${SRC_DIR}/led.c
+${SRC_DIR}/led.c \
+${SRC_DIR}/loop.c
 
 LIST_OBJ = $(LIST_SRC:.c=.rel)
 

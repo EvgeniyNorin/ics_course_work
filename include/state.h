@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stddef.h>
+
 typedef enum {
     INIT_STATE,
     DEFERRED_MODE_SELECTED_STATE,
@@ -10,8 +12,8 @@ typedef enum {
 } state_e;
 
 typedef enum {
-    KEY_ONE_PRESSED_EVENT,
-    KEY_TWO_PRESSED_EVENT,
+    STRICT_MODE_SELECTED_EVENT,
+    DEFERRED_MODE_SELECTED_EVENT,
     INTENSITY_SPECIFIED_EVENT,
     DELAY_SPECIFIED_EVENT,
     WORK_TIME_SPECIFIED_EVENT,
@@ -21,3 +23,5 @@ typedef enum {
 state_e get_current_state();
 
 state_e handle_event(event_e event);
+
+void force_return_to_init();

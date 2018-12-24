@@ -2,22 +2,26 @@
 
 state_e current_state_e = INIT_STATE;
 
+void force_return_to_init() {
+    current_state_e = INIT_STATE;
+}
+
 void default_fallback_transition_handler(event_e event) {
     switch(event) {
         case FALLBACK_TO_INIT_EVENT:
             current_state_e = INIT_STATE;
         default: 
-            current_state_e = INIT_STATE;
+            force_return_to_init();
     }
 }
 
 void init_state_transitions_handler(event_e event) {
     switch(event) {
-        case KEY_ONE_PRESSED_EVENT:     
+        case STRICT_MODE_SELECTED_EVENT:     
             current_state_e = STRICT_MODE_SELECTED_STATE;
             break;
         
-        case KEY_TWO_PRESSED_EVENT:
+        case DEFERRED_MODE_SELECTED_EVENT:
             current_state_e = DEFERRED_MODE_SELECTED_STATE;
             break;
 
