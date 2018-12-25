@@ -37,6 +37,7 @@ clean:
 	rm -f $(NAME).hex
 	rm -f $(NAME).bin
 	rm -f $(NAME).map
+	rm -f $(NAME).lk
 	rm -f $(SRC_DIR)/*.asm
 	rm -f $(SRC_DIR)/*.rel
 	rm -f $(SRC_DIR)/*.rst
@@ -60,14 +61,19 @@ term:
 
 
 LIST_SRC = \
-$(SRC_DIR)/main.c \
-${SRC_DIR}/state.c \
-${SRC_DIR}/lcd.c \
-${SRC_DIR}/time.c \
+${SRC_DIR}/isr.c \
+${SRC_DIR}/kb_controller.c \
+${SRC_DIR}/kb_driver.c \
 ${SRC_DIR}/keyboard.c \
-${SRC_DIR}/timer.c \
+${SRC_DIR}/lcd.c \
 ${SRC_DIR}/led.c \
-${SRC_DIR}/loop.c
+${SRC_DIR}/loop.c \
+$(SRC_DIR)/main.c \
+${SRC_DIR}/max.c \
+${SRC_DIR}/sound.c \
+${SRC_DIR}/state.c \
+${SRC_DIR}/time.c \
+${SRC_DIR}/timer_driver.c 
 
 LIST_OBJ = $(LIST_SRC:.c=.rel)
 

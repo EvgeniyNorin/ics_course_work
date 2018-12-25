@@ -45,8 +45,12 @@ void delay(unsigned long ms)
 unsigned int x;
 unsigned int y;
 
-static void write_ctrl(unsigned char data) {write_max(C_IND, data);}
-static void write_data(unsigned char data) {write_max(DATA_IND, data);}
+static void write_ctrl(unsigned char any_data) {
+    write_max(C_IND, any_data);
+}
+static void write_data(unsigned char any_data) {
+    write_max(DATA_IND, any_data);
+}
 static unsigned char read_ctrl() {return read_max(C_IND);}
 static unsigned char read_data() {return read_max(DATA_IND);}
 static void set_ctrl(rw_mode_t rw_mode, cd_mode_t cd_mode, int enable) {
@@ -55,8 +59,8 @@ static void set_ctrl(rw_mode_t rw_mode, cd_mode_t cd_mode, int enable) {
     write_ctrl(0x8 | cd_mode | rw_mode | !!enable);
 }
 
-static void send(unsigned char data, cd_mode_t cd_mode) {
-    write_data(data);
+static void send(unsigned char any_data, cd_mode_t cd_mode) {
+    write_data(any_data);
     set_ctrl(WRITE_MODE, cd_mode, 1);
     set_ctrl(WRITE_MODE, cd_mode, 0);
 }
@@ -77,9 +81,9 @@ static unsigned char receive(cd_mode_t cd_mode) {
 
 static int lcd_read_busy_flag() {
     // [BF,AC6,AC5,AC4,AC3,AC2,AC1,AC0]
-    int data = receive(CMD_MODE);
+    int any_data = receive(CMD_MODE);
 
-    return (data >> 7) & 0x01;
+    return (any_data >> 7) & 0x01;
 }
 
 static void wait_busy() {
