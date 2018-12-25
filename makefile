@@ -29,7 +29,33 @@ BAUD	 = 9600
 # Directories with source
 
 SRC_DIR = src
+INC_DIR = include
 # ---------------------------------------------------------------------------
+
+
+SOURCES := $(wildcard $(SRC_DIR)/*.c)
+HEADERS := $(wildcard $(INC_DIR)/*.h)
+CXX_TEST=g++
+CC_TEST=gcc
+TESTS_DIR = tests
+GTEST_DIR = thirdparty/googletest/googletest
+BLD_DIR = build
+
+
+test: $(BLD_DIR)/__tests
+	$(BLD_DIR)/__tests
+
+$(BLD_DIR)/__tests: $(TESTS_DIR)/tests.cc $(BLD_DIR)/libgtest.a $(TEST_OBJECTS)
+	$(CXX_TEST) -std=c++11 -isystem ${GTEST_DIR}/include -pthread $(TESTS_DIR)/tests.cc \
+		$(BLD_DIR)/libgtest.a $(TEST_OBJECTS) -o $(BLD_DIR)/__tests
+
+$(BLD_DIR)/libgtest.a: | $(BLD_DIR)
+	$(CXX_TEST) -std=c++11 -isystem ${GTEST_DIR}/include -I${GTEST_DIR} \
+		-pthread -c ${GTEST_DIR}/src/gtest-all.cc -o $(BLD_DIR)/gtest-all.o
+	ar -rv $(BLD_DIR)/libgtest.a $(BLD_DIR)/gtest-all.o
+
+$(BLD_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS) | $(BLD_DIR)
+	$(CC_TEST) -Wno-int-conversion -c $< -o $@
 
 all: pulse_width_modulation
 
@@ -57,8 +83,6 @@ dist:
 
 term:
 	$(M3P) echo $(COMLOG) $(BAUD)  openchannel $(COMPORT) +echo 6 term -echo bye
-
-
 
 LIST_SRC = \
 ${SRC_DIR}/isr.c \

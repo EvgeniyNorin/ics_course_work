@@ -49,9 +49,9 @@ iteration_parameters* allocate_params() {
 
 void run_iteration(iteration_parameters* params) {
     if(params != NULL) {
+        display_intensity(params -> intensity);
         delay_for_seconds(params -> delay);
         delay_for_seconds(params -> processing_time);
-        display_intensity(params -> intensity);
     }
 }
 
