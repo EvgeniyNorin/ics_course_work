@@ -47,8 +47,18 @@ iteration_parameters* allocate_params() {
     return params;
 }
 
-void loop() {
+void run_iteration(iteration_parameters* params) {
+    if(params != NULL) {
+        delay_for_seconds(params -> delay);
+        delay_for_seconds(params -> processing_time);
+        display_intensity(params -> intensity);
+    }
+}
+
+int main(void) {
     iteration_parameters* params;
+    fsm_init();
+    lcd_set_string(welcome_msg);
     while(1) {
         params = allocate_params();
         switch(get_current_state()) {
@@ -57,21 +67,25 @@ void loop() {
                 break;
 
             case DEFERRED_MODE_SELECTED_STATE:
+                lcd_set_string(enter_delay_msg);
                 params -> delay = bracket_for_user_io();
                 handle_event(DELAY_SPECIFIED_EVENT);
                 break;
 
             case STRICT_MODE_SELECTED_STATE:
+                lcd_set_string(enter_intensity_msg);
                 params -> intensity = bracket_for_user_io();
                 handle_event(INTENSITY_SPECIFIED_EVENT);
                 break;
 
             case INTENSITY_SELECTED_STATE:
+                lcd_set_string(enter_processing_time_msg);
                 params -> processing_time = bracket_for_user_io();    
                 handle_event(WORK_TIME_SPECIFIED_EVENT);
                 break;
 
             case PROGRESS_STATE:
+                run_iteration(params);
                 handle_event(FALLBACK_TO_INIT_EVENT);
                 break;
         }

@@ -68,7 +68,6 @@ ${SRC_DIR}/keyboard.c \
 ${SRC_DIR}/lcd.c \
 ${SRC_DIR}/led.c \
 ${SRC_DIR}/loop.c \
-$(SRC_DIR)/main.c \
 ${SRC_DIR}/max.c \
 ${SRC_DIR}/sound.c \
 ${SRC_DIR}/state.c \

@@ -9,3 +9,5 @@ typedef struct {
 } date_time;
 
 date_time* get_real_time();
+
+void delay_for_seconds(uint16_t secs);

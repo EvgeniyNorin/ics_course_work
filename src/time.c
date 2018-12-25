@@ -8,3 +8,7 @@
 date_time* get_real_time() {    
     return;
 }
+
+void delay_for_seconds(uint16_t secs) {
+    return;
+}
