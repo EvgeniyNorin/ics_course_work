@@ -101,6 +101,8 @@ static void shift_pos() {
 
 void lcd_clear() {
     send(CLEAR, CMD_MODE);
+	x = 0;
+	y = 0;
     wait_busy();
 }
 
