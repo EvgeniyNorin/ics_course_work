@@ -23,77 +23,79 @@ void enable_user_keyboard_io() {
 
 static int handle_keyboard_input(keyboard_event_t* event) {
     io_state = IN_PROGESS;
-    switch(event -> code) {
-        case KEY_0: 
-            if(buffer_index < MAX_BUFFER_LEN) {
-                buffer_for_numbers[buffer_index++] = '0';
-            }
-            break;
+	if (event->state == KEY_STATE_UP) {
+		switch(event -> code) {
+			case KEY_0: 
+				if(buffer_index < MAX_BUFFER_LEN) {
+					buffer_for_numbers[buffer_index++] = '0';
+				}
+				break;
 
-        case KEY_1: 
-            if(buffer_index < MAX_BUFFER_LEN) {
-                buffer_for_numbers[buffer_index++] = '1';
-            }
-            break;
+			case KEY_1: 
+				if(buffer_index < MAX_BUFFER_LEN) {
+					buffer_for_numbers[buffer_index++] = '1';
+				}
+				break;
 
-        case KEY_2: 
-            if(buffer_index < MAX_BUFFER_LEN) {
-                buffer_for_numbers[buffer_index++] = '2';
-            }
-            break;
-        
-        case KEY_3:
-            if(buffer_index < MAX_BUFFER_LEN) {
-                buffer_for_numbers[buffer_index++] = '3';
-            }
-            break;
+			case KEY_2: 
+				if(buffer_index < MAX_BUFFER_LEN) {
+					buffer_for_numbers[buffer_index++] = '2';
+				}
+				break;
+			
+			case KEY_3:
+				if(buffer_index < MAX_BUFFER_LEN) {
+					buffer_for_numbers[buffer_index++] = '3';
+				}
+				break;
 
-        case KEY_4:
-            if(buffer_index < MAX_BUFFER_LEN) {
-                buffer_for_numbers[buffer_index++] = '4';
-            }
-            break;    
+			case KEY_4:
+				if(buffer_index < MAX_BUFFER_LEN) {
+					buffer_for_numbers[buffer_index++] = '4';
+				}
+				break;    
 
-        case KEY_5:
-            if(buffer_index < MAX_BUFFER_LEN) {
-                buffer_for_numbers[buffer_index++] = '5';
-            }
-            break;
+			case KEY_5:
+				if(buffer_index < MAX_BUFFER_LEN) {
+					buffer_for_numbers[buffer_index++] = '5';
+				}
+				break;
 
-        case KEY_6:
-            if(buffer_index < MAX_BUFFER_LEN) {
-                buffer_for_numbers[buffer_index++] = '6';
-            }
-            break;
-        
-        case KEY_7:
-            if(buffer_index < MAX_BUFFER_LEN) {
-                buffer_for_numbers[buffer_index++] = '7';
-            }
-            break;
+			case KEY_6:
+				if(buffer_index < MAX_BUFFER_LEN) {
+					buffer_for_numbers[buffer_index++] = '6';
+				}
+				break;
+			
+			case KEY_7:
+				if(buffer_index < MAX_BUFFER_LEN) {
+					buffer_for_numbers[buffer_index++] = '7';
+				}
+				break;
 
-        case KEY_8:
-            if(buffer_index < MAX_BUFFER_LEN) {
-                buffer_for_numbers[buffer_index++] = '8';
-            }
-            break;
-        
-        case KEY_9:
-            if(buffer_index < MAX_BUFFER_LEN) {
-                buffer_for_numbers[buffer_index++] = '9';
-            }
-            break;
-        
-        case KEY_D:
-            if(buffer_index < MAX_BUFFER_LEN) {
-                buffer_for_numbers[buffer_index++] = '\0';
-            }
-            io_state = FINISHED;
-            break;
-        
-        
+			case KEY_8:
+				if(buffer_index < MAX_BUFFER_LEN) {
+					buffer_for_numbers[buffer_index++] = '8';
+				}
+				break;
+			
+			case KEY_9:
+				if(buffer_index < MAX_BUFFER_LEN) {
+					buffer_for_numbers[buffer_index++] = '9';
+				}
+				break;
+			
+			case KEY_D:
+				if(buffer_index < MAX_BUFFER_LEN) {
+					buffer_for_numbers[buffer_index++] = '\0';
+				}
+				io_state = FINISHED;
+				break;
+			
+			
 
-    } 
+		}
+	}	
 }
 
 uint16_t receive_user_number() { 

@@ -5,6 +5,7 @@
 #include "time.h"
 #include "sound.h"
 #include "loop.h"
+#include "aduc812.h"
 
 void fsm_init() {
     lcd_init();
@@ -49,6 +50,7 @@ iteration_parameters* allocate_params() {
 
 void run_iteration(iteration_parameters* params) {
     if(params != NULL) {
+		lcd_clear();
         display_intensity(params -> intensity);
         delay_for_seconds(params -> delay);
         delay_for_seconds(params -> processing_time);
@@ -58,7 +60,9 @@ void run_iteration(iteration_parameters* params) {
 int main(void) {
     iteration_parameters* params;
     fsm_init();
+	lcd_clear();
     lcd_set_string(welcome_msg);
+	EA = 1;
     while(1) {
         params = allocate_params();
         switch(get_current_state()) {
@@ -67,18 +71,21 @@ int main(void) {
                 break;
 
             case DEFERRED_MODE_SELECTED_STATE:
+				lcd_clear();
                 lcd_set_string(enter_delay_msg);
                 params -> delay = bracket_for_user_io();
                 handle_event(DELAY_SPECIFIED_EVENT);
                 break;
 
             case STRICT_MODE_SELECTED_STATE:
+				lcd_clear();
                 lcd_set_string(enter_intensity_msg);
                 params -> intensity = bracket_for_user_io();
                 handle_event(INTENSITY_SPECIFIED_EVENT);
                 break;
 
             case INTENSITY_SELECTED_STATE:
+				lcd_clear();
                 lcd_set_string(enter_processing_time_msg);
                 params -> processing_time = bracket_for_user_io();    
                 handle_event(WORK_TIME_SPECIFIED_EVENT);
