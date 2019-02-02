@@ -96,7 +96,9 @@ ${SRC_DIR}/max.c \
 ${SRC_DIR}/sound.c \
 ${SRC_DIR}/state.c \
 ${SRC_DIR}/time.c \
-${SRC_DIR}/timer_driver.c 
+${SRC_DIR}/timer_driver.c \
+${SRC_DIR}/system_timer.c 
+
 
 LIST_OBJ = $(LIST_SRC:.c=.rel)
 

@@ -2,7 +2,7 @@
 #include "lcd.h"
 #include "led.h"
 #include "state.h"
-#include "time.h"
+#include "system_timer.h"
 #include "sound.h"
 #include "loop.h"
 #include "aduc812.h"
@@ -51,9 +51,9 @@ iteration_parameters* allocate_params() {
 void run_iteration(iteration_parameters* params) {
     if(params != NULL) {
 		lcd_clear();
-        display_intensity(params -> intensity);
-        delay_for_seconds(params -> delay);
-        delay_for_seconds(params -> processing_time);
+        delay_ms(params -> delay * 1000);
+        leds(255 >> (8 - params -> intensity));
+        delay_ms(params -> processing_time * 1000);
     }
 }
 
@@ -61,6 +61,7 @@ int main(void) {
     iteration_parameters* params;
     fsm_init();
 	lcd_clear();
+    initialize_system_timer();
     lcd_set_string(welcome_msg);
 	EA = 1;
     while(1) {
@@ -89,6 +90,13 @@ int main(void) {
                 lcd_set_string(enter_processing_time_msg);
                 params -> processing_time = bracket_for_user_io();    
                 handle_event(WORK_TIME_SPECIFIED_EVENT);
+                break;
+
+            case DELAY_SELECTED_STATE:
+                lcd_clear();
+                lcd_set_string(enter_intensity_msg);
+                params -> intensity = bracket_for_user_io();
+                handle_event(INTENSITY_SPECIFIED_EVENT);
                 break;
 
             case PROGRESS_STATE:
