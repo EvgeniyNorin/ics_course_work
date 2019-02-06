@@ -1,8 +1,8 @@
 #include "system_timer.h"
+#include "led.h"
 
 u16 cnt = 0;
 time cur_ms;
-
 
 void T2_ISR1( void ) __interrupt ( 2 ){
 	cur_ms++;
@@ -39,9 +39,33 @@ time get_ms_after(time t0){
 	return cur_ms-t0;
 
 }
-void delay_ms(time t){
+void delay_ms1(time t){
 	time now = get_ms();
 	while(get_ms_after(now) < t){
 		;
 	}
+	
+}
+
+void delay_ms_with_leds1(time t, unsigned char mask){
+	time now = get_ms();
+	while(get_ms_after(now) < t){
+		leds(mask);
+	}
+}
+
+void delay_ms ( unsigned long ms ) {
+    volatile unsigned long i, j;
+    for( j = 0; j < ms; j++ ) {
+        for( i = 0; i < 50; i++ );
+    }   
+}
+
+void delay_ms_with_leds ( unsigned long ms, unsigned char mask ) {
+    volatile unsigned long i, j;
+    for( j = 0; j < ms; j++ ) {
+        for( i = 0; i < 50; i++ ) {
+			leds(mask);
+		}
+    }   
 }

@@ -6,6 +6,7 @@
 #include "sound.h"
 #include "loop.h"
 #include "aduc812.h"
+#include "stdio.h"
 
 void fsm_init() {
     lcd_init();
@@ -49,33 +50,39 @@ iteration_parameters* allocate_params() {
 }
 
 void run_iteration(iteration_parameters* params) {
-    if(params != NULL) {
+	if(params != NULL) {
 		lcd_clear();
-        delay_ms(params -> delay * 1000);
-        leds(255 >> (8 - params -> intensity));
-        delay_ms(params -> processing_time * 1000);
+
+		lcd_set_string("Waiting for delay");
+		delay_ms(params -> delay * 1000);
+        lcd_clear();
+		lcd_set_string("IN PROGRESS");
+		delay_ms_with_leds(params -> processing_time * 1000, 4);
+		leds(0);
+		lcd_clear();
     }
 }
 
 int main(void) {
+	volatile char* strr = (char*)malloc( sizeof(char) * 80 );
     iteration_parameters* params;
     fsm_init();
-	lcd_clear();
-    initialize_system_timer();
-    lcd_set_string(welcome_msg);
 	EA = 1;
+
     while(1) {
         params = allocate_params();
         switch(get_current_state()) {
             case INIT_STATE:
-                mode_selection_step(bracket_for_user_io());
+                lcd_clear();
+				lcd_set_string(welcome_msg);
+				mode_selection_step(bracket_for_user_io());
                 break;
 
             case DEFERRED_MODE_SELECTED_STATE:
 				lcd_clear();
                 lcd_set_string(enter_delay_msg);
                 params -> delay = bracket_for_user_io();
-                handle_event(DELAY_SPECIFIED_EVENT);
+				handle_event(DELAY_SPECIFIED_EVENT);
                 break;
 
             case STRICT_MODE_SELECTED_STATE:

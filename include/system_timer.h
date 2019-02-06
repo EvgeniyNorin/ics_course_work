@@ -13,5 +13,6 @@ void initialize_system_timer(void);
 time get_ms(void);
 time get_ms_after(time t0);
 void delay_ms(time t);
+void delay_ms_with_leds(time t, unsigned char mask);
 
 #endif

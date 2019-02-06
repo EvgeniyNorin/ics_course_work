@@ -7,7 +7,7 @@ static const char* welcome_msg = "1: Strict, 2: Deferred";
 
 static const char* enter_delay_msg = "Enter delay";
 
-static const char* enter_processing_time_msg = "Enter delay";
+static const char* enter_processing_time_msg = "Enter processing time";
 
 static const char* enter_intensity_msg = "Enter intensity";
 

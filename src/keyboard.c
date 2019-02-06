@@ -3,6 +3,8 @@
 #include "kb_controller.h"
 #include <stdint.h>
 #include <stdlib.h>    
+#include "lcd.h"
+#include "system_timer.h"
 
 #define MAX_BUFFER_LEN 15
 
@@ -104,6 +106,7 @@ uint16_t receive_user_number() {
     while(io_state != FINISHED) { continue; }
     free(buffer_for_numbers);
     buffer_index = 0;
-    io_state = WAIT;        
+    io_state = WAIT;  
+	
     return (uint16_t)atoi(buffer_for_numbers); 
 }
