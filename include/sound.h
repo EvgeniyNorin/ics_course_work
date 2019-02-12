@@ -29,5 +29,5 @@
 // Set sound frequency
 void set_freq(int hz);
 void set_volume(char x);
-
+void sound_note();
 void sound_init();

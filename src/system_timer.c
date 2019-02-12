@@ -57,14 +57,14 @@ void delay_ms_with_leds1(time t, unsigned char mask){
 void delay_ms ( unsigned long ms ) {
     volatile unsigned long i, j;
     for( j = 0; j < ms; j++ ) {
-        for( i = 0; i < 50; i++ );
+        for( i = 0; i < 20; i++ );
     }   
 }
 
 void delay_ms_with_leds ( unsigned long ms, unsigned char mask ) {
     volatile unsigned long i, j;
     for( j = 0; j < ms; j++ ) {
-        for( i = 0; i < 50; i++ ) {
+        for( i = 0; i < 10; i++ ) {
 			leds(mask);
 		}
     }   

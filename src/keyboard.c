@@ -101,12 +101,14 @@ static int handle_keyboard_input(keyboard_event_t* event) {
 }
 
 uint16_t receive_user_number() { 
+	uint16_t result;
     buffer_for_numbers = (char*)malloc( sizeof(char) * MAX_BUFFER_LEN );
     kbctrl_subscribe_any(handle_keyboard_input);
     while(io_state != FINISHED) { continue; }
-    free(buffer_for_numbers);
+    result = (uint16_t)atoi(buffer_for_numbers);
+	free(buffer_for_numbers);
     buffer_index = 0;
     io_state = WAIT;  
 	
-    return (uint16_t)atoi(buffer_for_numbers); 
+    return result; 
 }

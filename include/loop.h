@@ -11,6 +11,8 @@ static const char* enter_processing_time_msg = "Enter processing time";
 
 static const char* enter_intensity_msg = "Enter intensity";
 
+static const char* intensity_error_msg = "must be less then 9";
+
 typedef struct _iteration_parameters {
     uint16_t delay;
     uint16_t processing_time;
