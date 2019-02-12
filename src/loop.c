@@ -51,17 +51,17 @@ iteration_parameters* allocate_params() {
 }
 
 void sound_final_signal() {
-		//set_volume(7);
+		set_volume(5);
 		set_freq(A_NOTE_4);
 		delay_ms(500);
-		//set_volume(0);
+		set_volume(0);
 }
 
 void sound_error_signal() {
-		//set_volume(7);
+		set_volume(5);
 		set_freq(C_NOTE_4);
 		delay_ms(500);
-		//set_volume(0);
+		set_volume(0);
 }
 
 void run_iteration(iteration_parameters* params) {
@@ -98,7 +98,13 @@ int main(void) {
 				lcd_clear();
                 lcd_set_string(enter_delay_msg);
                 params -> delay = bracket_for_user_io();
-				handle_event(DELAY_SPECIFIED_EVENT);
+				
+				if (params -> delay < 1) {
+					sound_error_signal();
+					handle_event(FALLBACK_TO_INIT_EVENT);
+				} else {
+					handle_event(DELAY_SPECIFIED_EVENT);
+				}
                 break;
 
             case STRICT_MODE_SELECTED_STATE:
@@ -106,7 +112,7 @@ int main(void) {
                 lcd_set_string(enter_intensity_msg);
                 params -> intensity = bracket_for_user_io();
 				
-				if (params -> intensity > 8) {
+				if (params -> intensity > 8  || params -> intensity < 1) {
 					sound_error_signal();
 					handle_event(FALLBACK_TO_INIT_EVENT);
 				} else {
@@ -118,15 +124,25 @@ int main(void) {
             case INTENSITY_SELECTED_STATE:
 				lcd_clear();
                 lcd_set_string(enter_processing_time_msg);
-                params -> processing_time = bracket_for_user_io();			
-                handle_event(WORK_TIME_SPECIFIED_EVENT);
+                params -> processing_time = bracket_for_user_io();
+				if (params -> processing_time < 1) {
+					sound_error_signal();
+					handle_event(FALLBACK_TO_INIT_EVENT);
+				} else {
+					handle_event(WORK_TIME_SPECIFIED_EVENT);
+				}				
                 break;
 
             case DELAY_SELECTED_STATE:
                 lcd_clear();
                 lcd_set_string(enter_intensity_msg);
-                params -> intensity = bracket_for_user_io();
-                handle_event(INTENSITY_SPECIFIED_EVENT);
+                params -> intensity = bracket_for_user_io();				
+				if (params -> intensity > 8 || params -> intensity < 1) {
+					sound_error_signal();
+					handle_event(FALLBACK_TO_INIT_EVENT);
+				} else {
+				    handle_event(INTENSITY_SPECIFIED_EVENT);
+				}
                 break;
 
             case PROGRESS_STATE:
